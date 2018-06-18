@@ -5,7 +5,7 @@ import * as BiteActions from '../actions/bites';
 
 function mapStateToProps(state) {
   return {
-    bites: state.bites
+    bitesState: state.bites
   };
 }
 

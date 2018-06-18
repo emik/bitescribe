@@ -2,6 +2,7 @@
 export const ADD_BITE = 'ADD_BITE';
 export const EDIT_BITE = 'EDIT_BITE';
 export const DELETE_BITE = 'DELETE_BITE';
+export const SELECT_BITE = 'SELECT_BITE';
 
 export function addBite(bite) {
   return {
@@ -22,4 +23,11 @@ export function deleteBite(biteID) {
     type: DELETE_BITE,
     biteID
   };
+}
+
+export function selectBite(bite) {
+  return {
+    type: SELECT_BITE,
+    bite
+  }
 }
