@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { BiteObject } from '../utility/PropTypeValues';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { BiteObject } from '../utility/PropTypeValues';
 
 class BiteEditContainer extends Component {
 
@@ -35,10 +35,16 @@ class BiteEditContainer extends Component {
   }
 }
 
+BiteEditContainer.defaultProps = {
+  selectedBite: {},
+  bites: []
+}
+
 BiteEditContainer.propTypes = {
   addBite: PropTypes.func.isRequired,
   selectedBite: BiteObject,
-  bites: PropTypes.arrayOf(BiteObject)
+  bites: PropTypes.arrayOf(BiteObject),
+  editBite: PropTypes.func.isRequired,
 };
 
 export default BiteEditContainer;

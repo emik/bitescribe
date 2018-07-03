@@ -1,6 +1,5 @@
 {
   "rules": {
-    "flowtype/boolean-style": ["error", "boolean"],
     "flowtype/define-flow-type": "warn",
     "flowtype/delimiter-dangle": ["error", "never"],
     "flowtype/generic-spacing": ["error", "never"],
@@ -16,6 +15,9 @@
     "flowtype/space-before-type-colon": ["error", "never"],
     "flowtype/union-intersection-spacing": ["error", "always"],
     "flowtype/use-flow-type": "error",
-    "flowtype/valid-syntax": "error"
+    "flowtype/valid-syntax": "error",
+    "no-underscore-dangle": "off",
+    "react/jsx-boolean-value": "boolean",
+    "react/forbid-prop-types": "off"
   }
 }

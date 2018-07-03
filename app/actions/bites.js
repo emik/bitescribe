@@ -7,7 +7,7 @@ export const SELECT_BITE = 'SELECT_BITE';
 export function addBite(bite) {
   return {
     type: ADD_BITE,
-    bite 
+    bite
   };
 }
 
