@@ -38,8 +38,9 @@ const AddButton = styled.button`
   display: block;
   color: #c55c43;
   border: none;
-  padding: 1rem 0;
-  font-size: 2rem;
+  padding: 0.5rem 0;
+  font-size: 4rem;
+  line-height: 2.9rem;
 `;
 
 
@@ -60,7 +61,7 @@ class BiteListContainer extends Component {
             )
           })}
         </List>
-        <AddButton>Add</AddButton>
+        <AddButton title="Add new entry">+</AddButton>
       </Wrapper>
     );
   }

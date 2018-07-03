@@ -10,8 +10,8 @@ const biteTemplate = {
   editorState: null
 };
 
-const getHighestID = bites => {
-  return bites.reduce((carry, bite) => {
+const getHighestID = bitesArray => {
+  return bitesArray.reduce((carry, bite) => {
     if (bite.id > carry) return bite.id;
     return carry;
   }, 1);

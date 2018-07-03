@@ -9,10 +9,11 @@ import BiteFilterContainer from './containers/BiteFilterContainer';
 import { BiteObject, BitesState } from './utility/PropTypeValues';
 
 const Page = styled.div`
-  background: #FFF;
   display: grid;
   grid-template-columns: 1fr 5fr;
   min-height: 100vh;
+  background-color: #3b3c3e;
+  color: #FFF;
 `;
 
 // todo: implement filter view, pass in _resetView to all non-editor views, add close button that calls it

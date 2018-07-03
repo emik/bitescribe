@@ -4,10 +4,9 @@ export const EDIT_BITE = 'EDIT_BITE';
 export const DELETE_BITE = 'DELETE_BITE';
 export const SELECT_BITE = 'SELECT_BITE';
 
-export function addBite(bite) {
+export function addBite() {
   return {
-    type: ADD_BITE,
-    bite
+    type: ADD_BITE
   };
 }
 
