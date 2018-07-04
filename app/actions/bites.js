@@ -24,9 +24,9 @@ export function deleteBite(biteID) {
   };
 }
 
-export function selectBite(bite) {
+export function selectBite(biteID) {
   return {
     type: SELECT_BITE,
-    bite
+    biteID
   }
 }

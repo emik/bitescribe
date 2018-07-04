@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Editor } from 'react-draft-wysiwyg';
-import '../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { EditorState } from 'draft-js';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import '../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { BiteObject } from '../utility/PropTypeValues';
+import TagsEditor from '../TagsEditor';
+import TitleEditor from '../TitleEditor';
+import DatesEditor from '../DatesEditor';
 
 const StyledBiteEditContainer = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
+`;
+
+const StyledBiteEditorWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 `;
 
 const NoneSelectedWrapper = styled.div`
@@ -39,22 +49,60 @@ const NoBiteText = styled.div`
 
 class BiteEditContainer extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      editorState: this.props.selectedBite.editorState ? this.props.selectedBite.editorState : EditorState.createEmpty()
+    }
+  }
+
   _onEditorStateChange = (editorState) => {
     this.props.editBite({ ...this.props.selectedBite, editorState });
   };
 
+  _onTagsChange = (event) => {
+    this.props.editBite({ ...this.props.selectedBite, tags: event.target.value });
+  };
+
+  _onTitleChange = (event) => {
+    this.props.editBite({ ...this.props.selectedBite, title: event.target.value });
+  };
+
+  _onDateChange = (momentDate) => {
+    this.props.editBite({ ...this.props.selectedBite, date: momentDate.valueOf() });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    // TODO: fix editor state
+  }
+
   render() {
+    // console.log("this.props.selectedBite");
+    // console.log(this.props.selectedBite);
+    console.log("this.props.selectedBite");
+    console.log(this.props.selectedBite);
     return (
       <StyledBiteEditContainer>
         {this.props.selectedBite && (
-          <Editor
-            initialEditorState={this.props.selectedBite.editorState ? this.props.selectedBite.editorState : EditorState.createEmpty()}
-            // toolbarHidden={true}
-            onEditorStateChange={this._onEditorStateChange}
-            wrapperStyle={{ flex: '1' }}
-            editorStyle={{ backgroundColor: '#363636', borderRadius: '3px', padding: '0 1rem' }}
-            toolbarStyle={{}}
-          />
+          <StyledBiteEditorWrapper>
+            <TitleEditor textVal={this.props.selectedBite.title} editTitle={this._onTitleChange} />
+            <TagsEditor textVal={this.props.selectedBite.tags} editTags={this._onTagsChange} />
+            <Editor
+              toolbarHidden
+              placeholder="Your entry"
+              editorState={this.state.editorState}
+              // toolbarHidden={true}
+              onEditorStateChange={this._onEditorStateChange}
+              wrapperStyle={{ flex: '1' }}
+              editorStyle={{ backgroundColor: '#363636', borderRadius: '3px', padding: '0px 0.6rem' }}
+              toolbarStyle={{}}
+            />
+            <DatesEditor
+              editDate={this._onDateChange}
+              dateLastEdited={this.props.selectedBite.dateEdited}
+              biteDate={this.props.selectedBite.date}
+            />
+          </StyledBiteEditorWrapper>
         )}
         {!this.props.selectedBite && (
           <NoneSelectedWrapper>
@@ -68,7 +116,7 @@ class BiteEditContainer extends Component {
 }
 
 BiteEditContainer.defaultProps = {
-  selectedBite: {},
+  selectedBite: null,
   bites: []
 }
 

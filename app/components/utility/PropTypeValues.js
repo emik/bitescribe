@@ -2,14 +2,16 @@ import PropTypes from 'prop-types';
 
 const BiteObject = PropTypes.shape({
   id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string),
-  dateCreated: PropTypes.string.isRequired,
-  dateEdited: PropTypes.string.isRequired,
+  date: PropTypes.number.isRequired,
+  dateCreated: PropTypes.number.isRequired,
+  dateEdited: PropTypes.number.isRequired,
   text: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.array,
   ]),
+  editorState: PropTypes.object,
 });
 
 const BitesState = PropTypes.shape({

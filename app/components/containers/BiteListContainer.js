@@ -8,7 +8,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   background-color: #3b3c3e;
-  min-width: 10rem;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
 `;
 
 const Button = styled.button`
@@ -17,7 +20,10 @@ const Button = styled.button`
   width: 100%;
   border: none;
   background: none;
+  cursor: pointer;
   color: #e4927e;
+  text-align: left;
+  word-wrap: break-word;
 `;
 
 const List = styled.div`
@@ -30,6 +36,10 @@ const List = styled.div`
 const Bite = styled.div`
   width: 100%;
   display: block;
+  background-color: ${props => props.isSelected ? '#303030' : 'initial'};
+  &:hover {
+    background-color:  ${props => props.isSelected ? '#303030' : '#4a4a4a'};
+  }
 `;
 
 const AddButton = styled.button`
@@ -40,7 +50,6 @@ const AddButton = styled.button`
   border: none;
   padding: 0.5rem 0;
   font-size: 4rem;
-  line-height: 2.9rem;
 `;
 
 
@@ -51,17 +60,19 @@ const AddButton = styled.button`
 class BiteListContainer extends Component {
   render() {
     return (
-      <Wrapper>
+      <Wrapper style={{ width: `${this.props.sidebarWidth}%` }}>
         <List>
           {this.props.bites.map(bite => {
             return (
-              <Bite key={bite.id}>
-                <Button style={{ fontStyle: bite.name ? 'initial' : 'italic' }}>{bite.name || 'Unnamed'}</Button>
+              <Bite isSelected={bite.id === this.props.selectedBite.id} key={bite.id}>
+                <Button onClick={() => this.props.selectBite(bite.id)} style={{ fontStyle: bite.title ? 'initial' : 'italic' }}>{bite.title || 'Unnamed'}</Button>
               </Bite>
             )
           })}
         </List>
-        <AddButton title="Add new entry">+</AddButton>
+        <div>
+          <AddButton onClick={this.props.addBite} title="Add new entry">+</AddButton>
+        </div>
       </Wrapper>
     );
   }
@@ -72,6 +83,9 @@ BiteListContainer.defaultProps = {
 
 BiteListContainer.propTypes = {
   selectedBite: BiteObject,
+  sidebarWidth: PropTypes.number.isRequired,
+  selectBite: PropTypes.func.isRequired,
+  addBite: PropTypes.func.isRequired,
   bites: PropTypes.arrayOf(BiteObject).isRequired,
 };
 

@@ -9,11 +9,13 @@ import BiteFilterContainer from './containers/BiteFilterContainer';
 import { BiteObject, BitesState } from './utility/PropTypeValues';
 
 const Page = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 5fr;
-  min-height: 100vh;
   background-color: #3b3c3e;
   color: #FFF;
+`;
+
+const BoxSection = styled.div`
+  position: relative;
+  height: 100%;
 `;
 
 // todo: implement filter view, pass in _resetView to all non-editor views, add close button that calls it
@@ -25,9 +27,24 @@ class BitesWrapper extends Component {
     super(props);
     this.state = {
       currentView: views.Editor,
-      filtersApplied: {}
+      filtersApplied: {},
+      dimensions: { width: 1076, height: 768 },
+      sidebarWidth: 17 // in %
     };
   }
+
+  // componentDidMount() {
+  //   this.updateDimensions();
+  //   window.addEventListener("resize", this.updateDimensions.bind(this));
+  // }
+
+  // componentWillUnmount() {
+  //   window.removeEventListener("resize", this.updateDimensions.bind(this));
+  // }
+
+  // updateDimensions = () => {
+  //   this.setState({ dimensions: { width: window.innerWidth, height: window.innerHeight } });
+  // }
 
   _getSelectedBite = () => {
     if (this.props.bitesState.selectedBiteID === 0) return null;
@@ -50,6 +67,7 @@ class BitesWrapper extends Component {
     console.log("this.props");
     console.log(this.props);
     return (
+      // <Page style={{ width: this.state.dimensions.width, height: this.state.dimensions.height }}>
       <Page>
         <BiteListContainer
           bites={this.props.bitesState.bites}
@@ -58,24 +76,28 @@ class BitesWrapper extends Component {
           filtersApplied={this.state.filtersApplied}
           deleteBite={this.props.deleteBite}
           selectedBite={this._getSelectedBite()}
+          sidebarWidth={this.state.sidebarWidth}
         />
-        {
-          this.state.currentView === views.Editor &&
-          <BiteEditContainer
-            bites={this.props.bitesState.bites}
-            editBite={this.props.editBite}
-            addBite={this.props.addBite}
-            selectedBite={this._getSelectedBite()}
-          />
-        }
-        {
-          this.state.currentView === views.Filter &&
-          <BiteFilterContainer
-            filters={this.state.filtersApplied}
-            setFilters={this._setFilters}
-            resetView={this._resetView}
-          />
-        }
+        <BoxSection style={{ left: `${this.state.sidebarWidth}%`, width: `${100 - this.state.sidebarWidth}%` }}>
+          {
+            this.state.currentView === views.Editor &&
+            <BiteEditContainer
+              bites={this.props.bitesState.bites}
+              editBite={this.props.editBite}
+              addBite={this.props.addBite}
+              selectedBite={this._getSelectedBite()}
+              selectedBiteID={this.props.bitesState.selectedBiteID}
+            />
+          }
+          {
+            this.state.currentView === views.Filter &&
+            <BiteFilterContainer
+              filters={this.state.filtersApplied}
+              setFilters={this._setFilters}
+              resetView={this._resetView}
+            />
+          }
+        </BoxSection>
       </Page>
     );
   }
