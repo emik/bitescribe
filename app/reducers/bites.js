@@ -1,15 +1,17 @@
 import moment from 'moment';
 import { ADD_BITE, DELETE_BITE, EDIT_BITE, SELECT_BITE, DELETE_SELECTED_BITE } from '../actions/bites';
 
-const biteTemplate = {
-  id: 0,
-  title: '',
-  tags: [],
-  date: moment().valueOf(),
-  dateCreated: moment().valueOf(),
-  dateEdited: moment().valueOf(),
-  text: '',
-  editorState: null
+const biteTemplate = () => {
+  return {
+    id: 0,
+    title: '',
+    tags: [],
+    date: moment().valueOf(),
+    dateCreated: moment().valueOf(),
+    dateEdited: moment().valueOf(),
+    text: '',
+    editorState: null
+  }
 };
 
 const getHighestID = bitesArray => {
@@ -23,7 +25,7 @@ export default function bites(state = { bites: [], selectedBiteID: 0 }, action: 
   switch (action.type) {
     case ADD_BITE: {
       const newID = getHighestID(state.bites) + 1;
-      const newBites = [...state.bites, { ...biteTemplate, id: newID }];
+      const newBites = [...state.bites, { ...biteTemplate(), id: newID }];
       return { ...state, bites: newBites, selectedBiteID: newID };
     }
     case DELETE_BITE: {
@@ -36,7 +38,10 @@ export default function bites(state = { bites: [], selectedBiteID: 0 }, action: 
     }
     case EDIT_BITE: {
       let newBites = state.bites.filter(bite => bite.id !== action.bite.id);
-      newBites = [...newBites, { ...action.bite, dateEdited: new Date().getTime() }];
+      const oldBite = state.bites.find(bite => bite.id === action.bite.id);
+      console.log("oldBite");
+      console.log(oldBite);
+      newBites = [...newBites, { ...action.bite, dateCreated: oldBite.dateCreated, date: oldBite.date, dateEdited: moment().valueOf() }];
       return { ...state, bites: newBites };
     }
     case SELECT_BITE:

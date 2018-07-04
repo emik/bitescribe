@@ -57,18 +57,20 @@ const AddButton = styled.button`
 //        add search input at top
 //        refactor bitelist
 
+const sortByDate = (a, b) => b.date - a.date;
+
 class BiteListContainer extends Component {
   render() {
+    console.log('sorted')
+    console.log([...this.props.bites].sort(sortByDate))
     return (
       <Wrapper style={{ width: `${this.props.sidebarWidth}%` }}>
         <List>
-          {this.props.bites.map(bite => {
-            return (
-              <Bite isSelected={bite.id === this.props.selectedBiteID} key={bite.id}>
-                <Button onClick={() => this.props.selectBite(bite.id)} style={{ fontStyle: bite.title ? 'initial' : 'italic' }}>{bite.title || 'Unnamed'}</Button>
-              </Bite>
-            )
-          })}
+          {[...this.props.bites].sort(sortByDate).map(bite => (
+            <Bite isSelected={bite.id === this.props.selectedBiteID} key={bite.id}>
+              <Button onClick={() => this.props.selectBite(bite.id)} style={{ fontStyle: bite.title ? 'initial' : 'italic' }}>{bite.title || 'Unnamed'}</Button>
+            </Bite>
+          ))}
         </List>
         <div>
           <AddButton onClick={this.props.addBite} title="Add new entry">+</AddButton>
