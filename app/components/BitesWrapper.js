@@ -63,6 +63,12 @@ class BitesWrapper extends Component {
     this.setState({ filtersApplied: newFilters });
   }
 
+  _requestDelete = (biteID) => {
+    if (confirm("Delete this entry?")) {
+      this.props.deleteBite(biteID);
+    }
+  }
+
   render() {
     return (
       // <Page style={{ width: this.state.dimensions.width, height: this.state.dimensions.height }}>
@@ -74,6 +80,7 @@ class BitesWrapper extends Component {
           filtersApplied={this.state.filtersApplied}
           selectedBiteID={this.props.bitesState.selectedBiteID}
           sidebarWidth={this.state.sidebarWidth}
+          requestDeleteBite={this._requestDelete}
         />
         <BoxSection style={{ left: `${this.state.sidebarWidth}%`, width: `${100 - this.state.sidebarWidth}%` }}>
           {
@@ -83,7 +90,7 @@ class BitesWrapper extends Component {
               editBite={this.props.editBite}
               addBite={this.props.addBite}
               selectedBite={this._getSelectedBite()}
-              deleteSelectedBite={this.props.deleteSelectedBite}
+              requestDeleteBite={this._requestDelete}
               selectedBiteID={this.props.bitesState.selectedBiteID}
             />
           }

@@ -37,8 +37,12 @@ const Bite = styled.div`
   width: 100%;
   display: block;
   background-color: ${props => props.isSelected ? '#303030' : 'initial'};
+  position: relative;
   &:hover {
     background-color:  ${props => props.isSelected ? '#303030' : '#4a4a4a'};
+    .small-delete-btn {
+      display: block;
+    }
   }
 `;
 
@@ -56,6 +60,17 @@ const AddButton = styled.button`
   }
 `;
 
+const SmallDeleteButton = styled.button`
+  position: absolute;
+  display: none;
+  right: 0.3rem;
+  top: 0.25rem;
+  background-color: #525252;
+  border: none;
+  border-radius: 2px;
+  color: #FFF;
+  cursor: pointer;
+`;
 
 // todo:  add popup that shows filters
 //        add search input at top
@@ -73,6 +88,7 @@ class BiteListContainer extends Component {
           {[...this.props.bites].sort(sortByDate).map(bite => (
             <Bite isSelected={bite.id === this.props.selectedBiteID} key={bite.id}>
               <Button onClick={() => this.props.selectBite(bite.id)} style={{ fontStyle: bite.title ? 'initial' : 'italic' }}>{bite.title || 'Unnamed'}</Button>
+              <SmallDeleteButton className="small-delete-btn" onClick={() => this.props.requestDeleteBite(bite.id)}>X</SmallDeleteButton>
             </Bite>
           ))}
         </List>
@@ -90,6 +106,7 @@ BiteListContainer.propTypes = {
   selectBite: PropTypes.func.isRequired,
   addBite: PropTypes.func.isRequired,
   bites: PropTypes.arrayOf(BiteObject).isRequired,
+  requestDeleteBite: PropTypes.func.isRequired,
 };
 
 export default BiteListContainer;

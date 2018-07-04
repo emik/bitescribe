@@ -94,12 +94,6 @@ class BiteEditContainer extends Component {
     this.props.editBite({ ...this.props.selectedBite, date: momentDate.valueOf() });
   };
 
-  _onDelete = () => {
-    if (confirm("Delete this entry?")) {
-      this.props.deleteSelectedBite();
-    }
-  }
-
   render() {
     // console.log("this.props.selectedBite");
     // console.log(this.props.selectedBite);
@@ -115,7 +109,7 @@ class BiteEditContainer extends Component {
                 <TagsEditor tags={this.props.selectedBite.tags} editTags={this._onTagsChange} />
               </HeaderLeftColumn>
               <HeaderRightColumn>
-                <DeleteButton onClick={this._onDelete}>X</DeleteButton>
+                <DeleteButton onClick={() => this.props.requestDeleteBite(this.props.selectedBiteID)}>X</DeleteButton>
               </HeaderRightColumn>
             </HeaderEditingWrapper>
             <Editor
@@ -157,7 +151,8 @@ BiteEditContainer.propTypes = {
   selectedBite: BiteObject,
   bites: PropTypes.arrayOf(BiteObject),
   editBite: PropTypes.func.isRequired,
-  deleteSelectedBite: PropTypes.func.isRequired,
+  requestDeleteBite: PropTypes.func.isRequired,
+  selectedBiteID: PropTypes.number.isRequired,
 };
 
 export default BiteEditContainer;

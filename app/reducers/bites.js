@@ -30,7 +30,7 @@ export default function bites(state = { bites: [], selectedBiteID: 0 }, action: 
     }
     case DELETE_BITE: {
       const newBites = state.bites.filter(bite => bite.id !== action.biteID);
-      return { ...state, bites: newBites };
+      return { ...state, bites: newBites, selectedBiteID: action.biteID === state.selectedBiteID ? 0 : state.selectedBiteID };
     }
     case DELETE_SELECTED_BITE: {
       const newBites = state.bites.filter(bite => bite.id !== state.selectedBiteID);
@@ -39,8 +39,6 @@ export default function bites(state = { bites: [], selectedBiteID: 0 }, action: 
     case EDIT_BITE: {
       let newBites = state.bites.filter(bite => bite.id !== action.bite.id);
       const oldBite = state.bites.find(bite => bite.id === action.bite.id);
-      console.log("oldBite");
-      console.log(oldBite);
       newBites = [...newBites, { ...action.bite, dateCreated: oldBite.dateCreated, date: oldBite.date, dateEdited: moment().valueOf() }];
       return { ...state, bites: newBites };
     }
