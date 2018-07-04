@@ -64,8 +64,6 @@ class BitesWrapper extends Component {
   }
 
   render() {
-    console.log("this.props");
-    console.log(this.props);
     return (
       // <Page style={{ width: this.state.dimensions.width, height: this.state.dimensions.height }}>
       <Page>
@@ -74,7 +72,6 @@ class BitesWrapper extends Component {
           selectBite={this.props.selectBite}
           addBite={this.props.addBite}
           filtersApplied={this.state.filtersApplied}
-          deleteBite={this.props.deleteBite}
           selectedBite={this._getSelectedBite()}
           sidebarWidth={this.state.sidebarWidth}
         />
@@ -86,6 +83,7 @@ class BitesWrapper extends Component {
               editBite={this.props.editBite}
               addBite={this.props.addBite}
               selectedBite={this._getSelectedBite()}
+              deleteSelectedBite={this.props.deleteSelectedBite}
               selectedBiteID={this.props.bitesState.selectedBiteID}
             />
           }
@@ -110,6 +108,7 @@ BitesWrapper.defaultProps = {
 BitesWrapper.propTypes = {
   addBite: PropTypes.func.isRequired,
   deleteBite: PropTypes.func.isRequired,
+  deleteSelectedBite: PropTypes.func.isRequired,
   editBite: PropTypes.func.isRequired,
   selectBite: PropTypes.func.isRequired,
   bites: PropTypes.arrayOf(BiteObject),

@@ -47,13 +47,35 @@ const NoBiteText = styled.div`
   font-style: italic;
 `;
 
+const DeleteButton = styled.button`
+  height: 100%;
+  background: none;
+  color: #FFF;
+  border: none;
+  font-size: 2rem;
+  font-weight: 600;
+  width: 4.7rem;
+  background-color: #3a3a3a;
+  cursor: pointer;
+  &:hover {
+    background-color: #5f4848;
+  }
+`;
+
+const HeaderEditingWrapper = styled.div`
+  display: flex;
+`;
+
+const HeaderLeftColumn = styled.div`
+  flex: 1;
+`;
+
+const HeaderRightColumn = styled.div`
+`;
 class BiteEditContainer extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      editorState: this.props.selectedBite ? this.props.selectedBite.editorState : EditorState.createEmpty()
-    }
+  componentDidUpdate(prevProps, prevState) {
+    // TODO: fix editor state
   }
 
   _onEditorStateChange = (editorState) => {
@@ -72,8 +94,10 @@ class BiteEditContainer extends Component {
     this.props.editBite({ ...this.props.selectedBite, date: momentDate.valueOf() });
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    // TODO: fix editor state
+  _onDelete = () => {
+    if (confirm("Delete this entry?")) {
+      this.props.deleteSelectedBite();
+    }
   }
 
   render() {
@@ -85,12 +109,20 @@ class BiteEditContainer extends Component {
       <StyledBiteEditContainer>
         {this.props.selectedBite && (
           <StyledBiteEditorWrapper>
-            <TitleEditor textVal={this.props.selectedBite.title} editTitle={this._onTitleChange} />
-            <TagsEditor tags={this.props.selectedBite.tags} editTags={this._onTagsChange} />
+            <HeaderEditingWrapper>
+              <HeaderLeftColumn>
+                <TitleEditor textVal={this.props.selectedBite.title} editTitle={this._onTitleChange} />
+                <TagsEditor tags={this.props.selectedBite.tags} editTags={this._onTagsChange} />
+              </HeaderLeftColumn>
+              <HeaderRightColumn>
+                <DeleteButton onClick={this._onDelete}>X</DeleteButton>
+              </HeaderRightColumn>
+            </HeaderEditingWrapper>
             <Editor
+              initialEditorState={this.props.selectedBite.editorState}
               toolbarHidden
               placeholder="Your entry"
-              editorState={this.state.editorState}
+              editorState={this.props.selectedBite.editorState}
               // toolbarHidden={true}
               onEditorStateChange={this._onEditorStateChange}
               wrapperStyle={{ flex: '1' }}
@@ -125,6 +157,7 @@ BiteEditContainer.propTypes = {
   selectedBite: BiteObject,
   bites: PropTypes.arrayOf(BiteObject),
   editBite: PropTypes.func.isRequired,
+  deleteSelectedBite: PropTypes.func.isRequired,
 };
 
 export default BiteEditContainer;
