@@ -64,7 +64,7 @@ class BiteListContainer extends Component {
         <List>
           {this.props.bites.map(bite => {
             return (
-              <Bite isSelected={bite.id === this.props.selectedBite.id} key={bite.id}>
+              <Bite isSelected={bite.id === this.props.selectedBiteID} key={bite.id}>
                 <Button onClick={() => this.props.selectBite(bite.id)} style={{ fontStyle: bite.title ? 'initial' : 'italic' }}>{bite.title || 'Unnamed'}</Button>
               </Bite>
             )
@@ -77,12 +77,9 @@ class BiteListContainer extends Component {
     );
   }
 }
-BiteListContainer.defaultProps = {
-  selectedBite: { id: null }
-}
 
 BiteListContainer.propTypes = {
-  selectedBite: BiteObject,
+  selectedBiteID: PropTypes.number.isRequired,
   sidebarWidth: PropTypes.number.isRequired,
   selectBite: PropTypes.func.isRequired,
   addBite: PropTypes.func.isRequired,

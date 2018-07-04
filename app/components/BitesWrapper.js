@@ -72,7 +72,7 @@ class BitesWrapper extends Component {
           selectBite={this.props.selectBite}
           addBite={this.props.addBite}
           filtersApplied={this.state.filtersApplied}
-          selectedBite={this._getSelectedBite()}
+          selectedBiteID={this.props.bitesState.selectedBiteID}
           sidebarWidth={this.state.sidebarWidth}
         />
         <BoxSection style={{ left: `${this.state.sidebarWidth}%`, width: `${100 - this.state.sidebarWidth}%` }}>
