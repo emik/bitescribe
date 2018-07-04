@@ -52,7 +52,7 @@ class BiteEditContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorState: this.props.selectedBite.editorState ? this.props.selectedBite.editorState : EditorState.createEmpty()
+      editorState: this.props.selectedBite ? this.props.selectedBite.editorState : EditorState.createEmpty()
     }
   }
 
@@ -86,7 +86,7 @@ class BiteEditContainer extends Component {
         {this.props.selectedBite && (
           <StyledBiteEditorWrapper>
             <TitleEditor textVal={this.props.selectedBite.title} editTitle={this._onTitleChange} />
-            <TagsEditor textVal={this.props.selectedBite.tags} editTags={this._onTagsChange} />
+            <TagsEditor tags={this.props.selectedBite.tags} editTags={this._onTagsChange} />
             <Editor
               toolbarHidden
               placeholder="Your entry"

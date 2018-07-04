@@ -17,13 +17,13 @@ const StyledTextarea = styled(Textarea)`
 
 const TagsEditor = props => (
   <div>
-    <StyledTextarea placeholder="Tags" onChange={props.editTags} value={props.textVal} />
+    <StyledTextarea placeholder="Tags" onChange={props.editTags} />
   </div>
 );
 
 TagsEditor.propTypes = {
   editTags: PropTypes.func.isRequired,
-  textVal: PropTypes.string.isRequired,
+  tags: PropTypes.array.isRequired,
 };
 
 export default TagsEditor;
