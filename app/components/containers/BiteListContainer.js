@@ -50,6 +50,10 @@ const AddButton = styled.button`
   border: none;
   padding: 0.5rem 0;
   font-size: 4rem;
+  cursor: pointer;
+  &:hover {
+    background-color: #384236;
+  }
 `;
 
 
